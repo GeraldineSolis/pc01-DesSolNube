@@ -1,0 +1,7 @@
+FROM python:3.11-alpine
+WORKDIR /app
+COPY datos.csv .
+COPY verificar_reniec.py .
+RUN adduser -D appuser && chown -R appuser /app
+USER appuser
+CMD ["python", "verificar_reniec.py"]
