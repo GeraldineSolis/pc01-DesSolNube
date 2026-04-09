@@ -1,13 +1,18 @@
-# Etapa 1: Builder
 FROM python:3.11-alpine AS builder
 WORKDIR /app
-COPY datos.csv .
-COPY verificar_reniec.py .
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
 
-# Etapa 2: Final
 FROM python:3.11-alpine
 WORKDIR /app
-COPY --from=builder /app .
-RUN adduser -D appuser && chown -R appuser /app
-USER appuser
+
+RUN apk add --no-cache nss freetype harfbuzz ca-certificates ttf-freefont
+RUN apk add --no-cache chromium
+RUN apk add --no-cache chromium-chromedriver
+
+COPY --from=builder /root/.local /root/.local
+COPY . .
+
+ENV PATH=/root/.local/bin:$PATH
+
 CMD ["python", "verificar_reniec.py"]

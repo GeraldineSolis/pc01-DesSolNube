@@ -1,5 +1,14 @@
-FROM python:3.11-slim
+FROM python:3.11-alpine
+
+RUN apk add --no-cache nss freetype harfbuzz ca-certificates ttf-freefont
+RUN apk add --no-cache chromium
+RUN apk add --no-cache chromium-chromedriver
+
 WORKDIR /app
-COPY datos.csv .
-COPY verificar_reniec.py .
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
 CMD ["python", "verificar_reniec.py"]
