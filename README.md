@@ -13,10 +13,11 @@ Este proyecto consiste en una aplicación Python que utiliza **Selenium** y **Ch
 Para construir la imagen más eficiente (Multi-stage), ejecute:
 ```bash
 docker build -t reniec-app:final -f Dockerfile.multistage .
-
+```
 
 ## 📋 Ejecución
 
 Para procesar el archivo datos.csv y obtener el reporte resultados.csv en su carpeta local, use el siguiente comando:
 ```bash
 docker run --rm -v $(pwd):/app reniec-app:final
+```
